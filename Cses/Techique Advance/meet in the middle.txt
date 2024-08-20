@@ -1,0 +1,49 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+vector<ll> value(int N, vector<ll>& A) {
+    vector<ll> tmp;
+    for (int mask = 0; mask < (1 << N); mask++) {
+        ll sum = 0;
+        for (int i = 0; i < N; ++i) {
+            if (mask & (1 << i)) {
+                sum += A[i];
+            }
+        }
+        tmp.push_back(sum);
+    }
+    sort(tmp.begin(), tmp.end());
+    return tmp;
+}
+
+int main() {
+sp ;
+    int n;
+    ll x;
+    cin >> n >> x;
+    vector<ll> a(n);
+    FOR(0, n-1, i) cin >> a[i];
+    
+    int m = n / 2;
+    vector<ll> res1(a.begin(), a.begin() + m );
+    vector<ll> res2(a.begin() + m, a.end());
+    
+    vector<ll> sum1 = value(res1.size(), res1);
+    vector<ll> sum2 = value(res2.size(), res2);
+    
+    ll res = 0;
+    
+    FOR(0 , sum1.size() - 1 ,i) {
+      res = res + upper_bound(sum2.begin(),sum2.end(),x - sum1[i]) 
+                - lower_bound(sum2.begin(),sum2.end(),x - sum1[i]);
+    }
+    
+    cout << res;
+    
+
+return 0;
+}

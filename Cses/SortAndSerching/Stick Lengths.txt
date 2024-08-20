@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a, b, i) for(int i = a; i <= b; i++)
+#define sp ios_base::sync_with_stdio(0); cin.tie(0)
+
+ll a[200005];  
+int n;
+
+int main() {
+    sp;
+    cin >> n;
+    FOR(1, n, i) cin >> a[i];
+    sort(a + 1, a + 1 + n);
+
+    ll median = a[(n + 1) / 2];
+    ll result = 0;
+
+    FOR(1, n, i) {
+        result += abs(median - a[i]);
+    }
+
+    cout << result;
+    return 0;
+}

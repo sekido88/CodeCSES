@@ -1,0 +1,64 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+#define p_b(v) push_back(v)
+#define f first
+#define s second 
+
+const int mod = 1e9 + 7 ;
+const ll INF = LONG_MAX ;
+
+vector<pair<int,ll>>adj[100005] ;
+vector<ll>dist(100005, INF);
+
+int n , m ;
+
+bool cmp(const pair<ll,ll> &p1 ,const pair<ll,ll> &p2) {
+  return p1.s > p2.s ;
+}
+
+void dijkstra(ll s) {
+  
+  dist[s] = 0 ;
+  priority_queue<pair<ll,ll>, vector<pair<ll,ll>>,decltype(&cmp)> pq(cmp);
+  pq.push({s,0});
+  
+  while(!pq.empty()) {
+    pair<ll,ll>top = pq.top(); pq.pop();
+    ll u = top.f ;
+    ll d = top.s ;
+
+    if (d > dist[u]) continue ;
+    
+    for(auto it : adj[u]) {
+      ll v = it.f ;
+      ll dv = it.s ;
+      if (dist[u] + dv < dist[v]) {
+        dist[v] = dist[u] + dv ;
+        pq.push({v,dist[v]});
+      }
+    }
+  }
+  
+  for(int i = 1 ; i <= n ; i ++ ) {
+    if (dist[i] == INF) cout << "INF ";
+        else cout << dist[i] << ' ';
+  }
+}
+
+
+sekidoCode {
+    cin >> n >> m;
+    
+    FOR(1,m,i) {
+      ll x , y , w;
+      cin >> x >> y >> w ;
+      adj[x].push_back({y,w});
+    }
+    dijkstra(1);
+}

@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+ multiset<ll> mts,mts2;
+ll res = 0 , value ;
+int main() {
+    sp;
+    int n, w;
+    cin >> n >> w;
+    
+    FOR(1, n, i) {
+        cin >> value;
+        mts.insert(value);
+  
+    }
+
+    
+    // cout << *mts.upper_bound(100);
+    long long weight = w ;
+    while (!mts.empty()) {
+      
+      long long value = *mts.begin() ;
+      mts.erase(mts.begin()) ;
+      weight -= value ;
+          auto it = mts.upper_bound(weight);
+          while (it != mts.begin()) {
+            --it ;
+            weight -= *it ;
+            mts.erase(it);
+            it = mts.upper_bound(weight) ;
+          }
+      res ++ ;
+      weight = w ;
+    }
+    
+    cout << res;
+    return 0;
+}

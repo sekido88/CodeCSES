@@ -1,0 +1,50 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+#define p_b(v) push_back(v)
+
+const int mod = 1e9 + 7 ;
+const int max_v = INT_MAX;
+
+bool visited[1005][1005];
+int n , m ;
+char matrix[1005][1005];
+
+void solve(int i, int j) {
+  if (visited[i][j] ||  matrix[i][j] == '#') {
+    return ;
+  }
+  visited[i][j] = 1 ;
+  if (i == 0 || j == 0 || i == m + 1 || j == n + 1) {
+    return ;
+  }
+  solve(i + 1,j);
+  solve(i - 1,j);
+  solve(i , j + 1);
+  solve(i , j - 1);
+  
+}
+sekidoCode {
+ 
+  cin >> m >> n;
+  FOR(1,m,i) {
+    FOR(1,n,j) {
+      cin >> matrix[i][j];
+    }
+  }
+  ll res = 0 ;
+  FOR(1,m,i) {
+    FOR(1,n,j) {
+      if (!visited[i][j] && matrix[i][j] == '.') {
+        res ++ ;
+        solve(i,j);
+      }
+    }
+  }
+  cout << res;
+} 

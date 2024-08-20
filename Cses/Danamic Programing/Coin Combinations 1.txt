@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int M = 1e9 + 7;
+
+const int N = 1e6+5;
+int change[N];
+int main(){
+    int n,x;
+    cin>>n>>x;
+    int coins[n];
+    for(int i=0;i<n;i++) cin>>coins[i];
+    change[0] = 1;
+    for(int i=0;i<x;i++){
+        for(int j=0;j<n;j++){
+            if( change[i] == 0 ) continue;
+            if( i + coins[j]<=x ){
+                change[i+coins[j]]+=change[i];
+                change[i+coins[j]]%=M;
+            }
+        }
+    }
+    cout<<change[x];
+}

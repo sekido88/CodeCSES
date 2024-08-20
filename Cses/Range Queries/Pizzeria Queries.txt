@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+#define p_b(v) push_back(v)
+#define fi first 
+#define se second
+
+const int mod = 1e9 + 7 ;
+const long long INF = LONG_MAX;
+const int MAX_N = 2e5 + 5;
+const int MAX_TREE = 8e5 + 5;
+
+long long Up[MAX_TREE], Down[MAX_TREE];
+int a[MAX_N];
+
+void build(int id, int l, int r, ll t[]) {
+    if (l == r) {
+        t[id] = (t == Up) ? a[l] + l : a[l] - l;
+        return;
+    }
+    int m = (l + r) / 2;
+    build(id * 2, l, m, t);
+    build(id * 2 + 1, m + 1, r, t);
+    t[id] = min(t[id * 2], t[id * 2 + 1]);
+}
+
+long long get(int id, int l, int r, int u, int v, ll t[]) {
+    if (u <= l && r <= v) return t[id];
+    if (v < l || u > r) return INF;
+    int m = (l + r) / 2;
+    return min(get(id * 2, l, m, u, v, t), get(id * 2 + 1, m + 1, r, u, v, t));
+}
+
+void update(int id, int l, int r, int pos, int value, ll t[]) {
+    if (l == pos && r == pos) {
+        t[id] = (t == Up) ? value + l : value - l;
+        return;
+    }
+    if (pos < l || r < pos) return;
+    int m = (l + r) / 2;
+    update(id * 2, l, m, pos, value, t);
+    update(id * 2 + 1, m + 1, r, pos, value, t);
+    t[id] = min(t[id * 2], t[id * 2 + 1]);
+}
+// p[a] + | a - b | = p[a] - a + b , p[a] + a - b
+sekidoCode {
+    sp;
+    int n, q;
+    cin >> n >> q;
+    
+    FOR(1, n, i) {
+        cin >> a[i]; 
+        update(1, 1, n, i, a[i], Up);
+        update(1, 1, n, i, a[i], Down);
+    }
+
+    while(q--) {
+        int type, index, value;
+        cin >> type;
+        if (type == 1) {
+            cin >> index >> value;
+            a[index] = value;
+            update(1, 1, n, index, value, Up);
+            update(1, 1, n, index, value, Down);
+        } else {
+            cin >> index;
+            ll min_up = get(1, 1, n, index, n, Up) - index;
+            ll min_down = get(1, 1, n, 1, index, Down) + index;
+            cout << min(min_up, min_down) << '\n';
+        }
+    }  
+    return 0;
+}

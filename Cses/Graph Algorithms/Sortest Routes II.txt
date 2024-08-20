@@ -1,0 +1,46 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+#define p_b(v) push_back(v)
+
+const int mod = 1e9 + 7 ;
+const long long INF = LONG_MAX ;
+
+
+sekidoCode {
+    
+    ll m , n , q ,u ,v ,w;
+    cin >> n >> m >> q;
+    vector<vector<long long>>dist(n + 1,vector<long long>(n + 1,INF)) ;
+    
+    FOR(1,n,i) dist[i][i] = 0 ;
+    FOR(1,m,i) {
+      cin >> u >> v >> w;
+      dist[u][v] = min(w,dist[u][v]) ;
+      dist[v][u] = min(w,dist[v][u]) ;
+    }
+    
+    FOR(1,n,k) {
+      FOR(1,n,i) {
+        FOR(1,n,j) {
+          if (dist[i][k] < INF && dist[k][j] < INF) {
+            dist[i][j] = min(dist[i][j] , dist[i][k] + dist[k][j]) ;
+          }
+        }
+      }
+    }
+    
+    while(q--) {
+  
+      cin >> u >> v;
+      if (dist[u][v] != INF)
+      cout << dist[u][v] << '\n';
+      else cout << -1 << '\n';
+      
+    }
+}

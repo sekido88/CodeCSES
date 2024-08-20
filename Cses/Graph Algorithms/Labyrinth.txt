@@ -1,0 +1,82 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+#define f first 
+#define s second
+#define p_b(v) push_back(v)
+const int mod = 1e9 + 7 ;
+char a[1005][1005]; 
+char dr[1005][1005];
+bool vis[1005][1005];
+int m,n ;
+vector<char>path;
+bool ok = 0;
+
+bool IsValid(int  x, int y) {
+  if (x == 0 || x == m + 1 || y == 0 || y == n + 1) return false;
+  
+  if (a[x][y] == '#' || vis[x][y] == true ) return false ;
+  
+  return true;
+}
+
+void BFS(int x, int y) {
+  queue<pair<int,int>>q;
+  q.push({x,y});
+  vis[x][y] = true;
+    
+  while(!q.empty()) {
+    int i = q.front().f;
+    int j = q.front().s;
+    q.pop();
+    if (a[i][j] == 'B') {
+      while(1) {
+        path.push_back(dr[i][j]);
+          
+        if (path.back() == 'L') j++;
+        if (path.back() == 'R') j--;
+        if (path.back() == 'U') i++;
+        if (path.back() == 'D') i--;
+          
+        if (i == x && j == y) break;
+      }
+      ok = 1;
+      return;
+    }
+    
+    if(IsValid(i , j + 1)) q.push({i,j + 1}), dr[i][j + 1] = 'R', vis[i][j + 1] = 1;
+    if(IsValid(i , j - 1)) q.push({i,j - 1}), dr[i][j - 1] = 'L', vis[i][j - 1] = 1;
+    if(IsValid(i + 1, j)) q.push({i + 1,j}), dr[i + 1][j] = 'D', vis[i + 1][j] = 1;
+    if(IsValid(i - 1, j)) q.push({i - 1,j}), dr[i - 1][j] = 'U', vis[i - 1][j] = 1;
+  }
+}
+
+sekidoCode {
+    sp;
+    cin >> m >> n;
+    int posX, posY;
+    FOR(1,m,i) FOR(1,n,j) {
+      cin >> a[i][j];
+      if (a[i][j] == 'A') {
+        posX = i;
+        posY = j;
+      }
+    }
+    
+    BFS(posX, posY);
+    
+    if (ok) {
+      cout << "YES\n";
+      cout << path.size() << '\n';
+      reverse(path.begin(), path.end());
+      for (char c : path) cout << c;
+      cout << '\n';
+    } else {
+      cout << "NO\n";
+    }
+    
+    return 0;
+}

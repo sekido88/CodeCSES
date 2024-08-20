@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i=a;i<=b;i++)
+#define SP ios_base::sync_with_stdio(NULL);cin.tie(NULL);cout.tie(NULL);
+
+int n;
+long long a[200005];
+
+void solve()
+{
+   cin >> n;
+   FOR(1,n,i) cin >> a[i];
+   sort(a + 1, a + 1 + n);
+   
+   ll res = 1;
+   FOR(1,n,i) {
+     if (res < a[i]) {
+       break;
+     }
+     
+     res += a[i];
+   }
+  cout << res;
+}
+int main() 
+{  
+  
+  SP
+  solve();
+  return 0;
+}
+    

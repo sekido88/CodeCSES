@@ -3,8 +3,8 @@ using namespace std;
 #define ll long long
 #define FOR(a,b,i) for(int i = a ; i <= b ; i++)
 #define sp ios_base::sync_with_stdio(0);cin.tie(0)
- multiset<int> mts;
-int ans = 0 , value ;
+ multiset<ll> mts;
+ll ans = 0 , value ;
 int main() {
     sp;
     int n, w;
@@ -14,7 +14,7 @@ int main() {
         cin >> value;
         mts.insert(value);
     }
-    int gol = w;
+    ll gol = w;
     while (!mts.empty()) {
         if (gol - *mts.begin() == 0) {
           ans ++ ;

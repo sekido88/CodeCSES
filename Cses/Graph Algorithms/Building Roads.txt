@@ -1,0 +1,49 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+#define p_b(v) push_back(v)
+
+const int mod = 1e9 + 7 ;
+
+bool visited[100005];
+vector<int>g[100005];
+vector<int>res;
+int m , n;
+
+void dfs(int u) {
+  
+  visited[u] = 1 ;
+  for (int child : g[u]) {
+    if (!visited[child]) {
+      dfs(child);
+    }
+    // visited[child] = 1;
+  }
+  
+}
+sekidoCode {
+  
+  sp;
+  cin >> n >> m;
+  FOR(1,m,i) {
+    int x , y ;
+    cin >> x >> y;
+    g[x].push_back(y);
+    g[y].push_back(x);
+  }
+  
+  FOR(1,n,i) {
+    if (!visited[i]) {
+      dfs(i); res.push_back(i);
+    }
+  }
+  
+  cout << res.size() - 1<<'\n';
+  FOR(1,res.size() - 1 ,i) cout <<res[i-1]<< ' ' <<res[i] <<'\n';
+  
+}

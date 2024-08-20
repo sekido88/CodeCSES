@@ -1,0 +1,39 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+int m,t ;
+int dp[1005][1005] ;
+
+int get(int x1 ,int x2 ,int y1 ,int y2) {
+  
+    int res = dp[x2][y2] - dp[x1 - 1][y2] - dp[x2][y1 - 1] + dp[x1 - 1][y1 - 1];
+     
+    return res;
+}
+
+int main() {
+  sp ;
+  cin >> m >> t;
+  FOR(1,m,i) {
+  FOR(1,m,j) {
+    char c ; cin >> c;
+    int value = 0 ;
+    if (c == '*') value = 1;
+    dp[i][j] = dp[i-1][j] + dp[i][j-1] - dp[i-1][j-1] + value;
+  }
+  }
+  // FOR(1,m,i) {
+  //   FOR(1,m,j) cout << dp[i][j] << ' ';
+  //   cout << '\n';
+  // }
+  while(t--) {
+    int y1,x1,y2,x2 ;
+    cin >> x1 >> y1 >> x2 >> y2;
+    cout << get(x1,x2,y1,y2) << '\n';
+  }
+  return 0;
+}

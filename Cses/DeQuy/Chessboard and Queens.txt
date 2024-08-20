@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+char m[9][9];
+bool c[9][9];
+int hehe [105][105] ;
+int cuoc [25][25] ;
+/*
+1 2 3 4 5 6 7 8 
+2 4 6 8 10 12 14 16 
+3 6 9 12 15 18 21 24 
+4 8 12 16 20 24 28 32 
+5 10 15 20 25 30 35 40 
+6 12 18 24 30 36 42 48 
+7 14 21 28 35 42 49 56 
+8 16 24 32 40 48 56 64 
+*/
+ll res = 0 ;
+bool check(int row,int col) {
+  // cout << row << ' ' << col <<'\n'
+  for(int i = 1 ; i <= col -  1 ; i++) {
+    if (c[row][i]) return false;
+  }
+  for(int i = row , j = col ; i >=1 && j >= 1 ; --i , --j) {
+    if (c[i][j]) return false;
+  }
+  for(int i = row , j = col ; i <= 8 && j >= 1 ; ++i , --j) {
+    if (c[i][j]) return false;
+  }
+  return true;
+}
+
+void solveQuentCount(int col) {
+  if (col == 9) {
+    res ++ ;
+    return;
+  }
+  FOR(1,8,i) {
+    if(m[i][col] == '.' && check(i,col) ) {
+          c[i][col] = 1 ;
+          solveQuentCount(col + 1) ;
+          c[i][col] = 0 ;
+    }
+  }
+}
+
+void solve() {
+  solveQuentCount(1) ;
+  cout << res ;
+}
+int main() {
+  FOR(1,8,i) FOR(1,8,j) cin >> m[i][j];
+  solve();
+  // FOR(1,8,i){ FOR(1,8,j) {
+  //   cout <<i * j << " ";
+  //   cuoc[i][j] = i * j ;
+  // }
+  // cout<< '\n';
+  // }
+  // FOR(1,8,i) FOR(1,8,j) check2(i,j) ;
+}

@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+long long n, t, a[200005];
+long long s[200005];
+  int main() {
+  sp ;
+  cin >> n >> t;
+  FOR(1,n,i) {
+    cin >> a[i];
+    s[i] = s[i-1] + a[i];
+  }
+  while(t--) {
+    int l,r;
+    cin >> l >> r;
+    cout << s[r] - s[l-1] <<'\n';
+  }
+  
+  return 0;
+  }

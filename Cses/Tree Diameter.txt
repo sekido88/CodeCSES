@@ -1,0 +1,57 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+ 
+#define p_b(v) push_back(v)
+#define fi first 
+#define se second
+ 
+const int mod = 1e9 + 7 ;
+vector<int>adj[200005];
+long long dp[200005];
+ll maxA = 0; 
+ll res = 0; 
+ 
+void dfs(int s,int p){
+  
+  
+  for (auto u : adj[s]) {
+    if (u != p) {
+    dp[u] = dp[s] + 1;
+    dfs(u , s);
+    }
+  }       
+ 
+}
+ 
+sekidoCode {
+  int n;
+  cin >> n;
+  FOR(2,n,i) {
+    int x,y;
+    cin >> x >> y;
+  adj[x].push_back(y);
+  adj[y].push_back(x);
+  }
+  
+  dfs(1,0);
+  int u = 1;
+  FOR(1,n,i) {
+    if (dp[i] > maxA) {
+      maxA = dp[i];
+      u = i;
+    }
+  }
+  FOR(1,n,i) dp[i] = 0;
+  dfs(u,0);
+  FOR(1,n,i) {
+    res = max(res,dp[i]);
+  }
+  cout << res;
+
+
+}

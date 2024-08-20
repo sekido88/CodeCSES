@@ -1,0 +1,29 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+#define p_b(v) push_back(v)
+
+const int mod = 1e9 + 7 ;
+map<ll,ll>mp;
+sekidoCode {
+  
+  sp;
+    int n ;
+    cin >> n;
+    ll res = 0 ,sum = 0;
+    mp[0] = 1;
+    FOR(1,n,i) {
+      ll x ;
+      cin >> x;
+      sum += x;
+      sum = (sum % n + n) % n ;
+      res = res + mp[sum % n] ;
+      mp[sum % n] ++;
+    }
+    cout << res;
+}

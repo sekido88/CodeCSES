@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+const int mod = 1e9 + 7;
+int n;
+ll dp[1000006], s, a[105];
+ll INF = INT_MAX;
+int main() {
+  sp ;
+  cin >> n >> s;
+  FOR(1,n,i) cin >> a[i];
+  
+  dp[0] = 1 ;
+  
+  FOR(1,n,i) {
+    for(int j = 1 ; j <= s ; j++) {
+      if (j >= a[i])
+        dp[j] = (dp[j] % mod + dp[j - a[i]] % mod) % mod;
+    }
+  }
+  cout << dp[s];
+return 0;
+}

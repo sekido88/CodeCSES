@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+  ll a[100005],b[100005] ;
+
+ll t , k , n, q;
+void solve(int n,int k,int q,int x,ll a[] ,ll b[]) {
+      
+      int pos = upper_bound(a, a + k + 1 ,x) - a  ;
+      ll res = 0 ;
+      pos = pos - 1 ;  
+      res = b[pos] + (ll)( (x - a[pos]) * (b[pos + 1] - b[pos]) / (a[pos + 1] - a[pos])) ;
+      cout << res << ' ' ;
+      
+}
+int main() 
+
+{
+   cin >> t;
+   while(t--) {
+   
+     cin >> n >> k >> q ;
+     FOR(1,k,i) cin >> a[i];
+     FOR(1,k,j) cin >> b[j];
+     while(q--) {
+       int x;
+       cin >> x;
+      solve(n,k,q,x,a,b) ;
+     }
+     cout << '\n' ;
+   }
+    return 0;
+
+}
+

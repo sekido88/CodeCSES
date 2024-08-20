@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+ 
+const long long INF = LONG_MAX;
+ 
+long long n, a[200005] , test;
+long long t[1000005];
+ 
+void build(int id,int l,int r) {
+  if (l == r) {
+    t[id] = a[l] ;
+    return ;
+  }
+  int m = (l + r) / 2;
+  build(id * 2, l, m);
+  build(id * 2 + 1, m + 1, r);
+  t[id] = t[id * 2] + t[id * 2 + 1 ];
+}
+
+long long get(int id , int u , int v , int l , int r) {
+  
+  if (r < u || v < l) {
+    return 0 ;
+  }
+  if (u <= l && r <= v) {
+    return t[id] ;
+  }
+ 
+  int m = (l + r) / 2;
+  ll t1 = get(id * 2 , u , v , l , m ) ;
+  ll t2 = get(id * 2 + 1 , u , v , m + 1 ,r) ;
+  return (t1 + t2);
+}
+
+void update(int id , int l , int r , int pos , int value) {
+  if (l == pos && r == pos) {
+    t[id] = value;
+    a[pos] = value;
+    return ;
+  }
+  if (pos < l || r < pos) {
+    return ;
+  }
+  int m = (l + r) / 2;
+  update(id * 2, l , m , pos ,value);
+  update(id * 2 + 1, m + 1, r , pos , value);
+  t[id] = t[id * 2] + t[id * 2 + 1];
+}
+  int main() {
+  sp ;
+  cin >> n >> test;
+  FOR(1,n,i) {
+    cin >> a[i];
+  }
+  
+  build (1,1,n);
+  
+  while(test--) {
+    int k , pos , l , r  , value;
+    cin >> k;
+    if (k == 1) {
+      cin >> pos >> value;
+      update (1 , 1 , n , pos , value);
+
+    }
+    else {
+      cin >> l >> r;
+      cout << get(1 , l , r , 1 , n) << '\n';
+    }
+  }
+  
+  return 0;
+  }

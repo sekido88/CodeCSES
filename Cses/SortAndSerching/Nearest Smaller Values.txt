@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+// 7
+// 1 2 2 4 7
+ll a[200005] , n , k ;
+ll last_value = 0;
+// multiset<ll>mts;
+  int main() {
+  sp ;
+  cin >> n ;
+  FOR(1,n,i) cin >> a[i];
+
+  stack<int>st;
+  FOR(1,n,i) {
+    while (!st.empty () && a[st.top()] >= a[i]) {
+      st.pop();
+    }
+    if (st.empty()) cout << 0 << ' ';
+    else cout << st.top()<<' ';
+    
+    st.push(i);
+  }
+  return 0;
+  }

@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+
+const long long INF = LONG_MAX;
+
+long long n, a[200005] , test;
+long long t[1000005];
+
+void build(int id,int l,int r) {
+  if (l == r) {
+    t[id] = a[l] ;
+    return ;
+  }
+  int m = (l + r) / 2;
+  build(id * 2, l, m);
+  build(id * 2 + 1, m + 1, r);
+  t[id] = min(t[id * 2] , t[id * 2 + 1 ]);
+}
+long long get(int id , int u , int v , int l , int r) {
+  
+  if (r < u || v < l) {
+    return INF ;
+  }
+  if (u <= l && r <= v) {
+    return t[id] ;
+  }
+
+  int m = (l + r) / 2;
+  ll t1 = get(id * 2 , u , v , l , m ) ;
+  ll t2 = get(id * 2 + 1 , u , v , m + 1 ,r) ;
+  return min(t1,t2);
+}
+  int main() {
+  sp ;
+  cin >> n >> test;
+  FOR(1,n,i) {
+    cin >> a[i];
+  }
+  build (1,1,n);
+  while(test--) {
+    int l,r;
+    cin >> l >> r;
+    cout << get(1,l,r,1,n) << '\n';
+  }
+  
+  return 0;
+  }

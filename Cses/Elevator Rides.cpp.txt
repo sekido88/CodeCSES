@@ -1,0 +1,44 @@
+// sekicode
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define FOR(a,b,i) for(int i = a ; i <= b ; i++)
+#define sekidoCode int main()
+#define sp ios_base::sync_with_stdio(0);cin.tie(0)
+#define p_b(v) push_back(v)
+#define fi first 
+#define se second
+const int mod = 1e9 + 7 ;
+
+sekidoCode {
+    sp;
+    int n, x;
+    cin >> n >> x;
+
+    vector<int> weight(n);
+    FOR(0, n-1, i) {
+        cin >> weight[i];
+    }
+
+    vector<pair<int, ll>> best(1 << n, {n + 1, 0});
+    best[0] = {1, 0};
+
+    FOR(1, (1 << n) - 1, s) {
+        FOR(0, n-1, p) {
+            if (s & (1 << p)) {
+                auto option = best[s ^ (1 << p)];
+                if (option.se + weight[p] <= x) {
+                    option.se += weight[p];
+                } else {
+                    option.fi++;
+                    option.se = weight[p];
+                }
+                best[s] = min(best[s], option);
+            }
+        }
+    }
+
+    cout << best[(1 << n) - 1].fi << endl;
+
+    return 0;
+}
